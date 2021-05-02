@@ -2,10 +2,12 @@
 set -euo pipefail
 
 KUBE_CONTEXT="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_CONTEXT:-nuc}"
-TAG="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_TAG}"
+TAG="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_TAG:-$BUILDKITE_COMMIT}"
 APP="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_APP}"
 NAMESPACE="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_NAMESPACE:-$APP}"
 
 echo "Found ${KUBE_CONTEXT}; ${TAG}; ${APP}; ${NAMESPACE}"
 
 # helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${TAG} --create-namespace --namespace ${NAMESPACE} ${APP} charts/
+
+buildkite-agent annotate "Found ${APP}"
