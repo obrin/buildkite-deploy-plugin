@@ -1,12 +1,9 @@
 #!/bin/bash
 set -euo pipefail
 
-PATTERN="$BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_PATTERN"
+KUBE_CONTEXT="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_PATTERN:-nuc}"
+TAG="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_TAG}"
+APP="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_APP}"
+NAMESPACE="${BUILDKITE_PLUGIN_BUILDKITE_DEPLOY_PLUGIN_GIT_NAMESPACE:$APP}"
 
-echo "--- :1234: Counting the number of files"
-
-COUNT=$(find . -name "$PATTERN" | wc -l)
-
-echo "Found ${COUNT} files matching ${PATTERN}"
-
-buildkite-agent annotate "Found ${COUNT} files matching ${PATTERN}"
+helm dependency update charts && helm upgrade --install --kube-context ${KUBE_CONTEXT} --set image.tag=${TAG} --create-namespace --namespace ${NAMESPACE} ${APP} charts/
