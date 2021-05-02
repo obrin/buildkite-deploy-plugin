@@ -4,6 +4,12 @@ author: https://github.com/obrin
 requirements: []
 configuration:
   properties:
-    pattern:
+    tag:
+      type: string
+    app:
+      type: string
+    namespace:
+      type: string
+    context:
       type: string
   additionalProperties: false
