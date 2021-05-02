@@ -8,17 +8,11 @@ Add the following to your `pipeline.yml`:
 
 ```yml
 steps:
-  - command: ls
+  - label: 'Deploy'
     plugins:
-      - a-github-user/file-counter#v1.0.0:
-          pattern: '*.md'
+      - https://github.com/obrin/buildkite-deploy-plugin.git#v1.0.8:
+          app: APP_NAME
 ```
-
-## Configuration
-
-### `pattern` (Required, string)
-
-The file name pattern, for example `*.ts`. Supports any pattern supported by [find -name](http://man7.org/linux/man-pages/man1/find.1.html).
 
 ## Developing
 
