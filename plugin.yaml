@@ -1,5 +1,5 @@
-name: File Counter
-description: Annotates the build with a file count
+name: k8s deploy
+description: Deploys to kubernetes
 author: https://github.com/obrin
 requirements: []
 configuration:
